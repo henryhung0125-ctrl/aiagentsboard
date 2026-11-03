@@ -1,0 +1,10 @@
+{
+  "_note": "Single source of brand text. Edit and run python3 build.py. In build.py/legal.py the tokens @ZH@ / @EN@ / @TAG_ZH@ / @TAG_EN@ / @NAME_NOTE_ZH@ are replaced with these values at build time.",
+  "zh": "SI 精選",
+  "en": "AI Agents Board",
+  "tagline_zh": "每週幫你挑出最好用的 AI 工具",
+  "tagline_en": "The top AI agents, ranked weekly",
+  "name_note_zh": "SI 代表超級智慧（Superintelligence）。",
+  "mark": "SI",
+  "email": "sitop@mail.grokbot.com"
+}

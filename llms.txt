@@ -1,0 +1,28 @@
+# SI 精選 / AI Agents Board
+
+> The top AI agents, ranked weekly / 每週幫你挑出最好用的 AI 工具. A weekly ranking of AI agent tools by public signals such as GitHub stars, with who each tool is for and what it does. 每週 AI Agent 工具排行榜：依 GitHub 星數等公開訊號排名，並說明每個工具適合誰、能做什麼。
+
+Ranking method: GitHub repositories related to AI agents, created in roughly the last 60 days, sorted by GitHub stars (popularity, not a quality test). Sponsored content is always labeled and never affects rankings.
+
+## Latest issue (2026-11-02, last updated 2026-11-02)
+- [zh-Hant](https://aiagentsboard.com/issues/2026-11-02/) · [English](https://aiagentsboard.com/en/issues/2026-11-02/)
+
+1. [yetone/magpie](https://github.com/yetone/magpie): Lets each agent run on another model (e.g. Claude Code on Kimi, Codex on DeepSeek), switched from the menu bar; a local gateway moves to your next account when a quota runs out.
+2. [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast): Give it a goal and the agent picks actions (click, type, select, scroll) from a table of page elements; the README cites a Google Flights search done in 7.1 seconds.
+3. [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy): A Claude skill (also Codex, OpenCode and others) that turns an idea into an interactive isometric figure (SVG, WebGL, 3D) built from many precise parts.
+4. [deepseek-ai/dsh-superagent-prototype](https://github.com/deepseek-ai/dsh-superagent-prototype): A proactive coding agent for one GitHub repo: it listens to GitHub (optionally Feishu), takes work from allowed people, works in its own session and replies in the original thread, e.g. with a PR; a web panel shows what needs a person.
+5. [zai-org/ZCode](https://github.com/zai-org/ZCode): An AI coding workbench with a desktop app, browser UI and terminal agent; the repo holds the client, backend and agent CLI source.
+6. [Jakeschincariol/replica-skill](https://github.com/Jakeschincariol/replica-skill): Eleven Claude skills: reverse-engineer an app's screens and flows, rebuild, test, plan stack and database, wire auth and payments, brand and launch; it rebuilds features, never code, logos or content.
+7. [Louis-CFM/coucou](https://github.com/Louis-CFM/coucou): A notch buddy: approve permissions, watch agents work, drop files, chat with Claude; v0.4 adds offline voice typing and call recording with transcripts.
+8. [kaankiziltug/logo-design-skill](https://github.com/kaankiziltug/logo-design-skill): Takes an agent from brief to production SVG files and brand guidelines; includes a 1,400+ reference logo library and Python tools (16 px, one-colour, reversed tests, favicon export).
+9. [Oldcircle/geo-sleuth](https://github.com/Oldcircle/geo-sleuth): An agent skill (Claude Code, Codex, Cursor, Gemini CLI, etc.) that infers where a photo was taken and shows its reasoning; its description mentions OpenStreetMap and elevation skylines.
+10. [wangzan101/Mika](https://github.com/wangzan101/Mika): A phone AI assistant: say what you need and it operates apps and the web on a hidden background screen until done, while you keep using your phone.
+
+## Pages
+- [Archive](https://aiagentsboard.com/en/issues/)
+- [Sponsor](https://aiagentsboard.com/en/sponsor/)
+- [About](https://aiagentsboard.com/en/about/)
+- [Privacy](https://aiagentsboard.com/en/privacy/)
+- [Sponsor terms](https://aiagentsboard.com/en/terms/)
+
+Contact: sitop@mail.grokbot.com

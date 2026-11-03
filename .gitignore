@@ -1,0 +1,10 @@
+build.py
+legal.py
+logo.py
+weekly_update.py
+templates/
+data/
+__pycache__/
+README_WEEKLY.md
+screenshot-*.png
+logo-preview.png
