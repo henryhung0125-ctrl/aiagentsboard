@@ -5,7 +5,7 @@
 Ranking method: GitHub repositories related to AI agents, created in roughly the last 60 days, sorted by GitHub stars (popularity, not a quality test). Sponsored content is always labeled and never affects rankings.
 
 ## Latest issue (2026-11-02, last updated 2026-11-02)
-- [zh-Hant](https://aiagentsboard.com/issues/2026-11-02/) · [English](https://aiagentsboard.com/en/issues/2026-11-02/)
+- [English](https://aiagentsboard.com/issues/2026-11-02/) · [zh-Hant](https://aiagentsboard.com/zh/issues/2026-11-02/)
 
 1. [yetone/magpie](https://github.com/yetone/magpie): Lets each agent run on another model (e.g. Claude Code on Kimi, Codex on DeepSeek), switched from the menu bar; a local gateway moves to your next account when a quota runs out.
 2. [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast): Give it a goal and the agent picks actions (click, type, select, scroll) from a table of page elements; the README cites a Google Flights search done in 7.1 seconds.
@@ -19,10 +19,10 @@ Ranking method: GitHub repositories related to AI agents, created in roughly the
 10. [wangzan101/Mika](https://github.com/wangzan101/Mika): A phone AI assistant: say what you need and it operates apps and the web on a hidden background screen until done, while you keep using your phone.
 
 ## Pages
-- [Archive](https://aiagentsboard.com/en/issues/)
-- [Sponsor](https://aiagentsboard.com/en/sponsor/)
-- [About](https://aiagentsboard.com/en/about/)
-- [Privacy](https://aiagentsboard.com/en/privacy/)
-- [Sponsor terms](https://aiagentsboard.com/en/terms/)
+- [Archive](https://aiagentsboard.com/issues/)
+- [Sponsor](https://aiagentsboard.com/sponsor/)
+- [About](https://aiagentsboard.com/about/)
+- [Privacy](https://aiagentsboard.com/privacy/)
+- [Sponsor terms](https://aiagentsboard.com/terms/)
 
 Contact: sitop@mail.grokbot.com
