@@ -1,22 +1,27 @@
 # SI 精選 / AI Agents Board
 
-> The top AI agents, ranked weekly / 每週幫你挑出最好用的 AI 工具. A weekly ranking of AI agent tools by public signals such as GitHub stars, with who each tool is for and what it does. 每週 AI Agent 工具排行榜：依 GitHub 星數等公開訊號排名，並說明每個工具適合誰、能做什麼。
+> The top AI agents, ranked weekly / 每週幫你挑出最好用的 AI 工具. A weekly ranking of AI agent tools that combines public signals from GitHub, Hacker News, Product Hunt, Hugging Face, Reddit and tech news, with who each tool is for and what it does. 每週 AI Agent 工具排行榜：綜合 GitHub、Hacker News、Product Hunt、Hugging Face、Reddit 與科技新聞等公開訊號排名，並說明每個工具適合誰、能做什麼。
 
-Ranking method: GitHub repositories related to AI agents, created in roughly the last 60 days, sorted by GitHub stars (popularity, not a quality test). Sponsored content is always labeled and never affects rankings.
+Ranking method: autonomous AI agents (open-source and commercial) gathered from GitHub, Hacker News (Algolia API), Product Hunt, Hugging Face, Reddit and tech-news RSS, each vetted by hand, ranked by a published combined score (log-scaled signal per source relative to the week's best, times the source weight, plus a bonus per extra source). It measures attention, not quality. Sponsored content is always labeled and never affects rankings.
 
-## Latest issue (2026-11-02, last updated 2026-11-02)
-- [English](https://aiagentsboard.com/issues/2026-11-02/) · [zh-Hant](https://aiagentsboard.com/zh/issues/2026-11-02/)
+## Latest issue (2026-11-03, last updated 2026-11-03)
+- [English](https://aiagentsboard.com/issues/2026-11-03/) · [zh-Hant](https://aiagentsboard.com/zh/issues/2026-11-03/)
 
-1. [yetone/magpie](https://github.com/yetone/magpie): Lets each agent run on another model (e.g. Claude Code on Kimi, Codex on DeepSeek), switched from the menu bar; a local gateway moves to your next account when a quota runs out.
-2. [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast): Give it a goal and the agent picks actions (click, type, select, scroll) from a table of page elements; the README cites a Google Flights search done in 7.1 seconds.
-3. [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy): A Claude skill (also Codex, OpenCode and others) that turns an idea into an interactive isometric figure (SVG, WebGL, 3D) built from many precise parts.
-4. [deepseek-ai/dsh-superagent-prototype](https://github.com/deepseek-ai/dsh-superagent-prototype): A proactive coding agent for one GitHub repo: it listens to GitHub (optionally Feishu), takes work from allowed people, works in its own session and replies in the original thread, e.g. with a PR; a web panel shows what needs a person.
-5. [zai-org/ZCode](https://github.com/zai-org/ZCode): An AI coding workbench with a desktop app, browser UI and terminal agent; the repo holds the client, backend and agent CLI source.
-6. [Jakeschincariol/replica-skill](https://github.com/Jakeschincariol/replica-skill): Eleven Claude skills: reverse-engineer an app's screens and flows, rebuild, test, plan stack and database, wire auth and payments, brand and launch; it rebuilds features, never code, logos or content.
-7. [Louis-CFM/coucou](https://github.com/Louis-CFM/coucou): A notch buddy: approve permissions, watch agents work, drop files, chat with Claude; v0.4 adds offline voice typing and call recording with transcripts.
-8. [kaankiziltug/logo-design-skill](https://github.com/kaankiziltug/logo-design-skill): Takes an agent from brief to production SVG files and brand guidelines; includes a 1,400+ reference logo library and Python tools (16 px, one-colour, reversed tests, favicon export).
-9. [Oldcircle/geo-sleuth](https://github.com/Oldcircle/geo-sleuth): An agent skill (Claude Code, Codex, Cursor, Gemini CLI, etc.) that infers where a photo was taken and shows its reasoning; its description mentions OpenStreetMap and elevation skylines.
-10. [wangzan101/Mika](https://github.com/wangzan101/Mika): A phone AI assistant: say what you need and it operates apps and the web on a hidden background screen until done, while you keep using your phone.
+1. [Claude Code](https://www.anthropic.com/claude-code): Describe what you want and it plans, writes code, runs tests and opens pull requests; it can work on several tasks at once and runs in auto mode by default.
+2. [OpenAI Codex](https://openai.com/codex/): OpenAI's coding agent runs many agents in parallel, verifies work with computer and browser tools, keeps going in the cloud after you close your laptop, and reviews pull requests.
+3. [Docker Agent](https://github.com/docker/docker-agent): Docker's CLI plugin: define agents in YAML, give them tools (including MCP servers) and let teams of specialized agents delegate tasks automatically; works with many model providers.
+4. [Talorys](https://github.com/rociiu/talorys): A personal AI agent that runs entirely in your own Cloudflare account: it chats, remembers what matters, manages tasks, notes and projects, and runs reminders and routines on a schedule.
+5. [Omnara](https://github.com/omnara-ai/omnara): An open-source managed agent platform: run AI agents on any model and any machine through an API, with tools, secrets, permissions and streaming built in.
+6. [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype): A proactive coding agent for one GitHub repo: it listens to GitHub (optionally Feishu), takes work from allowed people, works in its own session and replies in the original thread, e.g. with a PR; a web panel shows what needs a person.
+7. [Manus](https://manus.im/): A general-purpose AI agent that carries out the tasks you describe; news reports say Manus raised over $500 million this month and partnered with OPPO to bring its agent to smartphones.
+8. [Jev Ultrafast](https://github.com/browser-use/jev-ultrafast): Give it a goal and the agent picks actions (click, type, select, scroll) from a table of page elements; the README cites a Google Flights search done in 7.1 seconds.
+9. [ZCode](https://github.com/zai-org/ZCode): An AI coding workbench with a desktop app, browser UI and terminal agent; the repo holds the client, backend and agent CLI source.
+10. [Mika](https://github.com/wangzan101/Mika): A phone AI assistant: say what you need and it operates apps and the web on a hidden background screen until done, while you keep using your phone.
+11. [ESP32 iPhone Agent](https://github.com/onehumanbeing/esp32-iphone-agent): Lets an AI model use a real iPhone with a $7 ESP32: it sees the screen over AirPlay and taps through USB input, with no computer and no jailbreak.
+12. [Andee](https://github.com/kuafuai/andee): An agent for Android and Mac that uses any app like you do, with no root, no custom ROM and no per-app integrations.
+13. [OpenDuet](https://github.com/CopilotKit/OpenDuet): An open-source proactive agent that starts on your work without being asked and keeps you in the loop; each agent has its own computer and works on web, mobile, Slack or Teams.
+14. [Riverside Agents](https://riverside.com/): Four video-only agents: Producer preps the session, Editor turns raw recordings into an episode, Clipper cuts social clips, Marketer writes captions and schedules posts; nothing is published until you approve.
+15. [Momentic Mo](https://momentic.ai/): Mo is an AI QA engineer that runs autonomous test sessions in the cloud on web or hosted iOS/Android; a separate agent reproduces each bug before Mo reports it.
 
 ## Pages
 - [Archive](https://aiagentsboard.com/issues/)
