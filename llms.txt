@@ -22,6 +22,8 @@ Ranking method: GitHub repositories related to AI agents, created in roughly the
 - [Archive](https://aiagentsboard.com/issues/)
 - [Submit your Agent](https://aiagentsboard.com/submit/)
 - [Sponsor](https://aiagentsboard.com/sponsor/)
+- [AI Coding Agent Setup Pack ($19)](https://aiagentsboard.com/setup-pack/)
+- [Probably Stolen price & profit calculator (unofficial)](https://aiagentsboard.com/tools/probably-stolen/)
 - [About](https://aiagentsboard.com/about/)
 - [Privacy](https://aiagentsboard.com/privacy/)
 - [Sponsor terms](https://aiagentsboard.com/terms/)
