@@ -20,6 +20,7 @@ Ranking method: GitHub repositories related to AI agents, created in roughly the
 
 ## Pages
 - [Archive](https://aiagentsboard.com/issues/)
+- [Submit your Agent](https://aiagentsboard.com/submit/)
 - [Sponsor](https://aiagentsboard.com/sponsor/)
 - [About](https://aiagentsboard.com/about/)
 - [Privacy](https://aiagentsboard.com/privacy/)
