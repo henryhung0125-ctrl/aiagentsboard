@@ -28,6 +28,7 @@ Ranking method: autonomous AI agents (open-source and commercial) gathered from 
 - [Submit your Agent](https://aiagentsboard.com/submit/)
 - [Sponsor](https://aiagentsboard.com/sponsor/)
 - [AI Coding Agent Setup Pack ($19)](https://aiagentsboard.com/setup-pack/)
+- [Free AI coding agent setup checklist](https://aiagentsboard.com/free-checklist/)
 - [Probably Stolen price & profit calculator (unofficial)](https://aiagentsboard.com/tools/probably-stolen/)
 - [About](https://aiagentsboard.com/about/)
 - [Privacy](https://aiagentsboard.com/privacy/)

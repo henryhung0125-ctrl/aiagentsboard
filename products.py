@@ -23,6 +23,7 @@ def pack_body(zh, P):
 4. Write a failing regression test, then the minimal fix.
 Do not: wrap it in try/except, add retries/sleeps as a fix."""
     return (f'<h1>AI Coding Agent Setup Pack</h1><p class="sub">{L("給 Claude Code、Cursor 與 Codex 使用者的實用設定包：範本、提示詞、工作流程與檢查清單。", "A practical setup kit for Claude Code, Cursor and Codex users: templates, prompts, workflows and checklists.")}</p>'
+            + f'<p class="sub">{L("還不確定？先拿", "Not sure yet? Start with the")} <a href="{P("/free-checklist/")}">{L("免費設定檢查清單", "free setup checklist")}</a>{L("。", ".")}</p>'
             f'<div class="card"><div class="price">$19</div><p>{L("一次付費，立即下載 zip（46 個檔案）。僅接受信用卡。", "One-time payment, instant zip download (46 files). Card payments only.")}</p><a class="btn" href="{BUY}">{L("購買並下載", "Buy &amp; download")}</a></div>'
             f'<div class="card"><h2>{L("內容", "What&#39;s inside")}</h2><ul>{lis}</ul></div>'
             f'<div class="card"><h2>{L("為什麼比免費範本好用", "Why it beats the free repos")}</h2>{why}</div>'
@@ -90,6 +91,9 @@ def extra_pages(lang_page, P, ROOT, updated):
         urls.append((lang_page(lang, "/setup-pack/", "AI Coding Agent 設定包：CLAUDE.md、AGENTS.md、Cursor 規則範本（$19）" if zh else "AI Coding Agent Setup Pack: CLAUDE.md, AGENTS.md & Cursor rules templates ($19)",
                                "給 Claude Code、Cursor 與 Codex 使用者的非官方設定包：三種技術棧範本、6 個提示詞、工作流程與檢查清單。" if zh else "Unofficial setup pack for Claude Code, Cursor and Codex users: templates for 3 stacks, 6 prompt templates, workflow guides and checklists.",
                                pack_body(zh, Pl), [prod], updated), updated))
+        urls.append((lang_page(lang, "/free-checklist/", "免費 AI Coding Agent 設定檢查清單｜Claude Code、Cursor、Codex" if zh else "Free AI Coding Agent Setup Checklist | Claude Code, Cursor, Codex",
+                               "20 個讓 Claude Code、Cursor 與 Codex 少出錯的設定重點，訂閱電子報免費取得。" if zh else "20 checks that make Claude Code, Cursor and Codex fail less. Free with the newsletter.",
+                               free_body(zh, Pl), None, updated), updated))
         app = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Probably Stolen Price & Profit Calculator (Unofficial)", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
         urls.append((lang_page(lang, "/tools/probably-stolen/", "Probably Stolen 售價計算機與利潤排行（非官方）｜物品價格、違禁品加價" if zh else "Probably Stolen Price Calculator & Profit Ranking (Unofficial) | Item Sell Prices",
                                "免費 Probably Stolen 售價計算機：依物品、狀態、難度與違禁等級算出建議售價，並以利潤與每格利潤排行 310 件物品。" if zh else "Free Probably Stolen sell price calculator: get the suggested sale price by item, condition, difficulty and contraband level, and rank 310 items by profit and profit per cell.",
@@ -97,3 +101,49 @@ def extra_pages(lang_page, P, ROOT, updated):
         lang_page(lang, DL, "下載｜AI Coding Agent Setup Pack" if zh else "Download | AI Coding Agent Setup Pack", "Download", dl_body(zh), None, None, True)
         shutil.copy("/workspace/pack/" + ZIP, os.path.join(ROOT, Pl(DL).lstrip("/"), ZIP))
     return urls
+
+NL = "https://aiagentsboard.beehiiv.com/subscribe"
+def free_cta(zh, P):
+    return (f'<div class="card"><h2>{"免費：AI Coding Agent 設定檢查清單" if zh else "Free: AI coding agent setup checklist"}</h2>'
+            f'<p>{"讓專案準備好給 Claude Code、Cursor 或 Codex 使用的 20 個重點。訂閱電子報即可免費取得。" if zh else "20 checks to get a repo ready for Claude Code, Cursor or Codex. Free when you join the newsletter."}</p>'
+            f'<a class="btn" href="{P("/free-checklist/")}">{"免費領取檢查清單" if zh else "Get the free checklist"}</a></div>')
+
+def free_body(zh, P):
+    L = lambda z, e: z if zh else e
+    sec = [(L("一次性：讓專案準備好給 Agent（約 30 分鐘）", "One time: make the repo agent-ready (~30 min)"), [
+        L("在專案根目錄放 <code>AGENTS.md</code>，寫上確切的安裝、測試、lint、型別檢查與建置指令", "Put an <code>AGENTS.md</code> at the repo root with the exact install, test, lint, type-check and build commands"),
+        L("在乾淨的 checkout 上實際跑過每一條指令", "Run every one of those commands on a clean checkout"),
+        L("提供並記錄「只跑單一測試」的指令，讓回饋更快", "Document a single-test command for a fast feedback loop"),
+        L("<code>CLAUDE.md</code> 用 <code>@AGENTS.md</code> 引用，不要重複內容", "Have <code>CLAUDE.md</code> import <code>@AGENTS.md</code> instead of duplicating it"),
+        L("寫一段「禁止事項」：新增依賴、改 lockfile、migration、密鑰、刪測試、force-push", "Add a \"Do not\" section: new deps, lockfile edits, migrations, secrets, deleting tests, force-push"),
+        L("<code>.env.example</code> 列出所有環境變數，真正的 <code>.env</code> 加入 gitignore", "List every env var in <code>.env.example</code>; keep the real <code>.env</code> gitignored"),
+        L("用 pre-commit 或 CI 自動跑 lint 與測試，Agent 才不會「忘記」", "Run lint and tests in pre-commit or CI so the agent can't skip them"),
+        L("安全指令加入允許清單，危險指令需要手動核准", "Allow-list safe commands; require approval for risky ones")]),
+      (L("每次任務前（1 分鐘）", "Before each task (1 minute)"), [
+        L("工作區乾淨，開新分支或 worktree", "Clean tree, new branch or worktree"),
+        L("把目標寫成可觀察的結果，並說明如何驗證", "Write the goal as an observable outcome, plus how to verify it"),
+        L("備好相關路徑、錯誤訊息或 issue 連結", "Have the relevant paths, errors or issue link ready"),
+        L("講清楚限制（不加依賴、API 不變等）", "State constraints (no new deps, keep the API stable, etc.)"),
+        L("改動超過 3 個檔案或需求不明確時，先規劃再動手", "Touching 3+ files or unclear? Plan first, then execute"),
+        L("開新的 session，避免舊上下文干擾", "Start a fresh session so old context doesn't leak in")]),
+      (L("合併前", "Before merging"), [
+        L("讀完整個 diff，不只看摘要", "Read the whole diff, not just the summary"),
+        L("<code>git diff --stat</code> 只出現預期中的檔案", "<code>git diff --stat</code> shows only the files you expected"),
+        L("CI 上型別檢查、lint 與完整測試通過，而不是 Agent 說「本機通過」", "Type-check, lint and full tests pass in CI, not just \"locally\" per the agent"),
+        L("新行為有測試，沒有測試被刪除、跳過或放寬", "New behavior has tests; none were deleted, skipped or loosened"),
+        L("親手跑過一次功能", "Try the feature yourself once"),
+        L("沒有密鑰、除錯輸出或被註解掉的程式碼", "No secrets, debug prints or commented-out code")])]
+    lists = "".join(f'<h2>{h}</h2><ul style="list-style:none;padding-left:0">' + "".join(f'<li><label><input type="checkbox"> {i}</label></li>' for i in items) + '</ul>' for h, items in sec)
+    return f'''<h1>{L("免費 AI Coding Agent 設定檢查清單", "Free AI coding agent setup checklist")}</h1>
+<p class="sub">{L("給 Claude Code、Cursor 與 Codex 使用者：20 個讓 Agent 少出錯的重點。", "For Claude Code, Cursor and Codex users: 20 checks that make agents fail less.")}</p>
+<div class="card" id="gate"><h2>{L("1. 訂閱電子報", "1. Join the newsletter")}</h2>
+<p>{L("每週一封 AI Agent 工具排行，隨時可取消訂閱。按下按鈕會在新分頁開啟 beehiiv 訂閱頁，輸入 email 即可。", "One email a week with the AI agent tools ranking. Unsubscribe anytime. The button opens our beehiiv signup page in a new tab; just enter your email.")}</p>
+<p><a class="btn" id="sub" href="{NL}" target="_blank" rel="noopener">{L("📬 免費訂閱並取得清單", "📬 Subscribe free & get the checklist")}</a></p>
+<p class="sub"><a href="#" id="skip">{L("已經訂閱了？直接看清單", "Already subscribed? Show the checklist")}</a></p></div>
+<div id="list" hidden><div class="card"><p class="sub">{L("2. 你的檢查清單（可直接勾選，或用瀏覽器列印存成 PDF）", "2. Your checklist (tick as you go, or print to PDF)")}</p>{lists}</div>
+<div class="card"><h2>{L("想要完整版？", "Want the full kit?")}</h2><p>{L("$19 設定包包含三種技術棧的 AGENTS.md / CLAUDE.md / Cursor 規則範本、6 個提示詞、工作流程指南、完整檢查清單與實例。", "The $19 Setup Pack adds AGENTS.md / CLAUDE.md / Cursor rules templates for 3 stacks, 6 prompt templates, workflow guides, the full checklists and worked examples.")}</p>
+<a class="btn" href="{BUY}">{L("購買設定包 $19", "Get the Setup Pack — $19")}</a> <a href="{P("/setup-pack/")}">{L("查看內容", "See what&#39;s inside")}</a></div></div>
+<script>(function(){{var s=function(){{document.getElementById('list').hidden=false;try{{localStorage.setItem('fc','1')}}catch(e){{}}}};
+document.getElementById('sub').addEventListener('click',function(){{setTimeout(s,800)}});
+document.getElementById('skip').addEventListener('click',function(e){{e.preventDefault();s()}});
+try{{if(localStorage.getItem('fc'))s()}}catch(e){{}}}})();</script>'''
