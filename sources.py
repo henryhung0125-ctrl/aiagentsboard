@@ -144,9 +144,43 @@ def signals(agent, date, cache, days=30):
             src, title = (it.findtext("source") or ""), (it.findtext("title") or "")
             if src in REPUTABLE and _hit(title, [t]): nw.append({"url": it.findtext("link"), "title": title, "source": src})
     nw += [{"url": u} for u in agent.get("news", [])]
-    if nw: out["news"] = {"value": len({i["title"] if "title" in i else i["url"] for i in nw}), "evidence": list(dict.fromkeys(i["url"] for i in nw))[:4],
-                          "outlets": sorted({i["source"] for i in nw if "source" in i})}
+    if nw:
+        ev = []
+        for u in dict.fromkeys(i["url"] for i in nw if i.get("url")):
+            if len(ev) >= 4: break
+            ev.append(publisher_url(u))
+        out["news"] = {"value": len({i["title"] if "title" in i else i["url"] for i in nw}), "evidence": ev,
+                       "outlets": sorted({i["source"] for i in nw if "source" in i})}
     return out
+
+def publisher_url(url):
+    """Google News /rss/articles/ links are wrappers. Resolve the publisher URL.
+    Any other URL is unchanged. If Google does not return one https article URL, keep the wrapper."""
+    if not url or "news.google.com" not in url or "/articles/" not in url:
+        return url
+    try:
+        page = fetch(url)
+        if not page: return url
+        sig = re.search(r'data-n-a-sg="([^"]+)"', page)
+        ts = re.search(r'data-n-a-ts="(\d+)"', page)
+        if not sig or not ts: return url
+        article_id = url.split("/articles/", 1)[1].split("?", 1)[0]
+        rpc = json.dumps(["garturlreq",
+            [["X", "X", ["X", "X"], None, None, 1, 1, "US:en", None, 1, None, None, None, None, None, 0, 1],
+             "X", "X", 1, [1, 1, 1], 1, 1, None, 0, 0, None, 0],
+            article_id, int(ts.group(1)), sig.group(1)], separators=(",", ":"))
+        freq = json.dumps([[["Fbv4je", rpc, None, "generic"]]], separators=(",", ":"))
+        req = urllib.request.Request("https://news.google.com/_/DotsSplashUi/data/batchexecute",
+            data=urllib.parse.urlencode({"f.req": freq}).encode(),
+            headers={"User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8", "Referer": "https://news.google.com/"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            body = r.read().decode("utf-8", "replace")
+        m = re.search(r'garturlres\\",\\"(https://[^\\"\s]+)', body)
+        if not m or "news.google.com" in m.group(1): return url
+        return m.group(1)
+    except Exception as e:
+        print(f"  news resolve failed: {e}", file=sys.stderr)
+        return url
 
 def score(agents):
     """Combined score: for each source, value -> log scale, divided by the best value among this week's agents,

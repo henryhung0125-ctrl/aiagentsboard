@@ -1,5 +1,6 @@
-"""Extra pages: AI Coding Agent Setup Pack (sales + hidden download) and Probably Stolen calculator."""
+"""Extra pages: AI Coding Agent Setup Pack (sales + hidden download), free checklist, which-agent picker, and Probably Stolen calculator."""
 import os, json, shutil
+from which_agent import picker_body
 DL = "/dl/C0EXYCG89EaeAcvytSaNYKjS/"
 BUY = "https://buy.stripe.com/14AbJ1ccI83l8ky8ZseIw04"
 TIP = "https://buy.stripe.com/4gMdR990w97p0S6a3weIw03"
@@ -94,6 +95,9 @@ def extra_pages(lang_page, P, ROOT, updated):
         urls.append((lang_page(lang, "/free-checklist/", "免費 AI Coding Agent 設定檢查清單｜Claude Code、Cursor、Codex" if zh else "Free AI Coding Agent Setup Checklist | Claude Code, Cursor, Codex",
                                "20 個讓 Claude Code、Cursor 與 Codex 少出錯的設定重點，訂閱電子報免費取得。" if zh else "20 checks that make Claude Code, Cursor and Codex fail less. Free with the newsletter.",
                                free_body(zh, Pl), None, updated), updated))
+        urls.append((lang_page(lang, "/which-agent/", "我該用哪個 AI Agent？｜SI 精選" if zh else "Which AI agent should I use? | AI Agents Board",
+                               "回答 3 個小問題，從本週排行幫你挑出 3 個 AI Agent，並連結免費檢查清單與 $19 設定包。" if zh else "Answer 3 short questions and get 3 AI agent picks from this week's board, plus the free setup checklist and the $19 setup pack.",
+                               picker_body(zh, Pl), None, updated), updated))
         app = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Probably Stolen Price & Profit Calculator (Unofficial)", "applicationCategory": "GameApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
         urls.append((lang_page(lang, "/tools/probably-stolen/", "Probably Stolen 售價計算機與利潤排行（非官方）｜物品價格、違禁品加價" if zh else "Probably Stolen Price Calculator & Profit Ranking (Unofficial) | Item Sell Prices",
                                "免費 Probably Stolen 售價計算機：依物品、狀態、難度與違禁等級算出建議售價，並以利潤與每格利潤排行 310 件物品。" if zh else "Free Probably Stolen sell price calculator: get the suggested sale price by item, condition, difficulty and contraband level, and rank 310 items by profit and profit per cell.",
@@ -103,6 +107,7 @@ def extra_pages(lang_page, P, ROOT, updated):
     return urls
 
 NL = "https://aiagentsboard.beehiiv.com/subscribe"
+# Homepage order: free_cta(), then which_agent.picker_cta().
 def free_cta(zh, P):
     return (f'<div class="card"><h2>{"免費：AI Coding Agent 設定檢查清單" if zh else "Free: AI coding agent setup checklist"}</h2>'
             f'<p>{"讓專案準備好給 Claude Code、Cursor 或 Codex 使用的 20 個重點。訂閱電子報即可免費取得。" if zh else "20 checks to get a repo ready for Claude Code, Cursor or Codex. Free when you join the newsletter."}</p>'
