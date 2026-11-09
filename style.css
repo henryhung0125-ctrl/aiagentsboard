@@ -13,3 +13,11 @@ main{max-width:900px;margin:0 auto;padding:24px 20px}h1{font-size:clamp(26px,5vw
 .badge.full{color:#0a7d38;background:#e8f7ee}.badge.semi{color:#9a5b00;background:#fff4e0}.badge.price{color:#334;background:#f1f3f7}
 @media(max-width:480px){.badge{font-size:.72rem;padding:2px 6px}}
 .badge.src{color:#7cc4ff;background:#10233a;text-decoration:none;font-size:.72rem}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{display:block;width:100%;text-align:left;font:inherit;font-size:16px;color:#e8eaf0;background:#0b0d12;border:1px solid #333b4f;border-radius:10px;padding:12px 14px;cursor:pointer}
+.qopt:hover,.qopt:focus-visible{border-color:#7cc4ff;outline:none}
+.qopt[aria-pressed="true"]{border-color:#7cc4ff;background:#10233a}
+.qnav{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+button.btn{border:0;cursor:pointer;font:inherit}
+button.btn:disabled{opacity:.45;cursor:default}
+button.linkish{background:none;border:0;color:#7cc4ff;font:inherit;cursor:pointer;padding:0}

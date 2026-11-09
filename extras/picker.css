@@ -1,0 +1,8 @@
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{display:block;width:100%;text-align:left;font:inherit;font-size:16px;color:#e8eaf0;background:#0b0d12;border:1px solid #333b4f;border-radius:10px;padding:12px 14px;cursor:pointer}
+.qopt:hover,.qopt:focus-visible{border-color:#7cc4ff;outline:none}
+.qopt[aria-pressed="true"]{border-color:#7cc4ff;background:#10233a}
+.qnav{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+button.btn{border:0;cursor:pointer;font:inherit}
+button.btn:disabled{opacity:.45;cursor:default}
+button.linkish{background:none;border:0;color:#7cc4ff;font:inherit;cursor:pointer;padding:0}
