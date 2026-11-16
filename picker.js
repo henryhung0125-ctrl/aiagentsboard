@@ -1,22 +1,22 @@
-/* Which-agent picker. Agent ids, ranks, URLs and fit tags match the 2026-11-09 board.
+/* Which-agent picker. Agent ids, ranks, URLs and fit tags match the 2026-11-16 board.
    Localized names and blurbs are supplied by the page as window.PICKER_DATA. */
 (function () {
   var AGENTS = [
     {id: "claude-code", rank: 1, href: "https://www.anthropic.com/claude-code", uses: ["code"], cost: "sub", skill: "yes"},
-    {id: "codex", rank: 2, href: "https://openai.com/codex/", uses: ["code"], cost: "sub", skill: "yes"},
-    {id: "docker-agent", rank: 13, href: "https://github.com/docker/docker-agent", uses: ["host"], cost: "free", skill: "some"},
-    {id: "talorys", rank: 3, href: "https://github.com/rociiu/talorys", uses: ["tasks"], cost: "free", skill: "some"},
+    {id: "codex", rank: 3, href: "https://openai.com/codex/", uses: ["code"], cost: "sub", skill: "yes"},
+    {id: "docker-agent", rank: 15, href: "https://github.com/docker/docker-agent", uses: ["host"], cost: "free", skill: "some"},
+    {id: "talorys", rank: 19, href: "https://github.com/rociiu/talorys", uses: ["tasks"], cost: "free", skill: "some"},
     {id: "omnara", rank: 4, href: "https://github.com/omnara-ai/omnara", uses: ["host"], cost: "free", skill: "yes"},
     {id: "dsh-superagent", rank: 5, href: "https://github.com/deepseek-ai/dsh-superagent-prototype", uses: ["code"], cost: "free", skill: "yes"},
-    {id: "manus", rank: 9, href: "https://manus.im/", uses: ["tasks"], cost: "paid", skill: "no"},
-    {id: "jev", rank: 8, href: "https://github.com/browser-use/jev-ultrafast", uses: ["device"], cost: "free", skill: "yes"},
-    {id: "zcode", rank: 10, href: "https://github.com/zai-org/ZCode", uses: ["code"], cost: "free", skill: "yes"},
-    {id: "mika", rank: 11, href: "https://github.com/wangzan101/Mika", uses: ["device"], cost: "free", skill: "some"},
-    {id: "esp32", rank: 12, href: "https://github.com/onehumanbeing/esp32-iphone-agent", uses: ["device"], cost: "free", skill: "yes"},
-    {id: "andee", rank: 14, href: "https://github.com/kuafuai/andee", uses: ["device"], cost: "freemium", skill: "no"},
-    {id: "openduet", rank: 15, href: "https://github.com/CopilotKit/OpenDuet", uses: ["tasks"], cost: "free", skill: "yes"},
-    {id: "riverside", rank: 16, href: "https://riverside.com/", uses: ["video"], cost: "sub", skill: "no"},
-    {id: "momentic", rank: 17, href: "https://momentic.ai/", uses: ["qa"], cost: "freemium", skill: "yes"}
+    {id: "manus", rank: 22, href: "https://manus.im/", uses: ["tasks"], cost: "paid", skill: "no"},
+    {id: "jev", rank: 9, href: "https://github.com/browser-use/jev-ultrafast", uses: ["device"], cost: "free", skill: "yes"},
+    {id: "zcode", rank: 11, href: "https://github.com/zai-org/ZCode", uses: ["code"], cost: "free", skill: "yes"},
+    {id: "mika", rank: 10, href: "https://github.com/wangzan101/Mika", uses: ["device"], cost: "free", skill: "some"},
+    {id: "esp32", rank: 14, href: "https://github.com/onehumanbeing/esp32-iphone-agent", uses: ["device"], cost: "free", skill: "yes"},
+    {id: "andee", rank: 13, href: "https://github.com/kuafuai/andee", uses: ["device"], cost: "freemium", skill: "no"},
+    {id: "openduet", rank: 17, href: "https://github.com/CopilotKit/OpenDuet", uses: ["tasks"], cost: "free", skill: "yes"},
+    {id: "riverside", rank: 18, href: "https://riverside.com/", uses: ["video"], cost: "sub", skill: "no"},
+    {id: "momentic", rank: 20, href: "https://momentic.ai/", uses: ["qa"], cost: "freemium", skill: "yes"}
   ];
   var COST = {free: {free: 1, freemium: 1}, sub: {free: 1, freemium: 1, sub: 1}, any: {free: 1, freemium: 1, sub: 1, paid: 1}};
   var SKILL = {no: {no: 1}, some: {no: 1, some: 1}, yes: {no: 1, some: 1, yes: 1}};
