@@ -21,3 +21,12 @@ main{max-width:900px;margin:0 auto;padding:24px 20px}h1{font-size:clamp(26px,5vw
 button.btn{border:0;cursor:pointer;font:inherit}
 button.btn:disabled{opacity:.45;cursor:default}
 button.linkish{background:none;border:0;color:#7cc4ff;font:inherit;cursor:pointer;padding:0}
+
+form.fix p{margin:14px 0}
+form.fix label{display:block;margin:0 0 6px;font-weight:600}
+form.fix input,form.fix select,form.fix textarea{display:block;width:100%;max-width:560px;padding:10px 12px;border-radius:8px;border:1px solid #333b4f;background:#0b0d12;color:#e8eaf0;font:inherit}
+form.fix textarea{min-height:140px;resize:vertical}
+form.fix select{appearance:auto}
+form.fix .honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+form.fix button.btn{margin-top:6px}
+.card h3{font-size:17px;margin:16px 0 6px}

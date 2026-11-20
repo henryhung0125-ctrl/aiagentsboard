@@ -32,6 +32,7 @@ Ranking method: autonomous AI agents (open-source and commercial) gathered from 
 
 ## Pages
 - [Archive](https://aiagentsboard.com/issues/)
+- [Stuck AI-built app? We fix it](https://aiagentsboard.com/fix/)
 - [Submit your Agent](https://aiagentsboard.com/submit/)
 - [Sponsor](https://aiagentsboard.com/sponsor/)
 - [AI Coding Agent Setup Pack ($19)](https://aiagentsboard.com/setup-pack/)

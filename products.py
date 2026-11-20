@@ -1,5 +1,6 @@
-"""Extra pages: AI Coding Agent Setup Pack (sales + hidden download) and Probably Stolen calculator."""
+"""Extra pages: AI Coding Agent Setup Pack (sales + hidden download), Probably Stolen calculator, and the stuck-app fix service."""
 import os, json, shutil
+from urllib.parse import quote
 DL = "/dl/C0EXYCG89EaeAcvytSaNYKjS/"
 BUY = "https://buy.stripe.com/14AbJ1ccI83l8ky8ZseIw04"
 TIP = "https://buy.stripe.com/4gMdR990w97p0S6a3weIw03"
@@ -98,6 +99,21 @@ def extra_pages(lang_page, P, ROOT, updated):
         urls.append((lang_page(lang, "/tools/probably-stolen/", "Probably Stolen 售價計算機與利潤排行（非官方）｜物品價格、違禁品加價" if zh else "Probably Stolen Price Calculator & Profit Ranking (Unofficial) | Item Sell Prices",
                                "免費 Probably Stolen 售價計算機：依物品、狀態、難度與違禁等級算出建議售價，並以利潤與每格利潤排行 310 件物品。" if zh else "Free Probably Stolen sell price calculator: get the suggested sale price by item, condition, difficulty and contraband level, and rank 310 items by profit and profit per cell.",
                                ps_body(zh, Pl, items), [app], updated), updated))
+        svc = {"@context": "https://schema.org", "@type": "Service",
+               "name": "Stuck AI-built app fix" if not zh else "AI 程式代修",
+               "description": "Free first look at a stuck AI-built app. Standard fix US$149 per issue. If we cannot fix it, you pay nothing.",
+               "provider": {"@type": "Organization", "name": "AI Agents Board", "url": "https://aiagentsboard.com/"},
+               "areaServed": "Worldwide",
+               "offers": {"@type": "Offer", "price": "149.00", "priceCurrency": "USD",
+                          "description": "Standard fix per issue, quoted after a free first look. No charge if we cannot fix it."}}
+        urls.append((lang_page(lang, "/fix/",
+                               "AI 做出來的程式卡住了？我們幫你修好｜SI 精選" if zh else "Stuck AI-built app? We fix it | AI Agents Board",
+                               "用 Claude Code、Cursor、Lovable、Bolt、Replit 或 v0 做的程式卡住了？先免費看一眼。一般問題一項 149 美元。修不好不收費。" if zh else "Built an app with Claude Code, Cursor, Lovable, Bolt, Replit or v0 and got stuck? Free first look. Standard fix US$149 per issue. If we can't fix it, you pay nothing.",
+                               fix_body(zh, Pl), [svc], "2026-11-19"), "2026-11-19"))
+        lang_page(lang, "/fix/thanks/",
+                  "已收到你的代修申請｜SI 精選" if zh else "We got your fix request | AI Agents Board",
+                  "我們已收到你的申請，會再回信說明免費初看。" if zh else "Thanks. We got your request and will write back about the free first look.",
+                  fix_thanks_body(zh, Pl), None, updated, True)
         lang_page(lang, DL, "下載｜AI Coding Agent Setup Pack" if zh else "Download | AI Coding Agent Setup Pack", "Download", dl_body(zh), None, None, True)
         shutil.copy("/workspace/pack/" + ZIP, os.path.join(ROOT, Pl(DL).lstrip("/"), ZIP))
     return urls
@@ -147,3 +163,93 @@ def free_body(zh, P):
 document.getElementById('sub').addEventListener('click',function(){{setTimeout(s,800)}});
 document.getElementById('skip').addEventListener('click',function(e){{e.preventDefault();s()}});
 try{{if(localStorage.getItem('fc'))s()}}catch(e){{}}}})();</script>'''
+
+def fix_cta(zh, P):
+    L = lambda z, e: z if zh else e
+    return (f'<div class="card"><h2>{L("AI 做出來的程式卡住了？我們幫你修好。", "Stuck AI-built app? We fix it.")}</h2>'
+            f'<p>{L("錯誤訊息、上不了線、登入、付款，或資料庫連不上。先免費看一眼，一般問題 149 美元。修不好不收費。", "Error messages, failed deploys, login, payments, or a database that won&#39;t connect. Free first look; standard fix US$149. If we can&#39;t fix it, you pay nothing.")}</p>'
+            f'<a class="btn" href="{P("/fix/")}">{L("送出免費初看", "Send a free first look")}</a></div>')
+
+def fix_form(zh, P):
+    L = lambda z, e: z if zh else e
+    action = P("/fix/thanks/")
+    lang = "zh" if zh else "en"
+    subj = quote("程式代修申請" if zh else "Stuck app fix request")
+    body = quote("姓名：\n電子郵件：\n使用的工具：\n專案或壓縮檔連結：\n卡在哪裡：\n" if zh else "Name:\nEmail:\nTool used:\nRepo or zip link:\nWhat's stuck:\n")
+    mailto = f"mailto:{MAIL}?subject={subj}&body={body}"
+    opts = [("Claude Code", "Claude Code"), ("Cursor", "Cursor"), ("Lovable", "Lovable"),
+            ("Bolt", "Bolt"), ("Replit", "Replit"), ("v0", "v0"), ("Codex", "Codex"),
+            ("Other", L("其他", "Other"))]
+    options = '<option value="" disabled selected hidden>' + L("請選擇", "Choose one") + "</option>" + "".join(
+        f'<option value="{v}">{lab}</option>' for v, lab in opts)
+    return (
+        f'<form class="fix" name="fix-request" method="POST" action="{action}" data-netlify="true" netlify-honeypot="bot-field">'
+        f'<input type="hidden" name="form-name" value="fix-request">'
+        f'<input type="hidden" name="language" value="{lang}">'
+        f'<p class="honeypot"><label>Do not fill this in <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>'
+        f'<p><label for="fix-name">{L("姓名", "Name")}</label>'
+        f'<input id="fix-name" name="name" type="text" required autocomplete="name"></p>'
+        f'<p><label for="fix-email">{L("電子郵件", "Email")}</label>'
+        f'<input id="fix-email" name="email" type="email" required autocomplete="email"></p>'
+        f'<p><label for="fix-tool">{L("使用的工具", "Tool used")}</label>'
+        f'<select id="fix-tool" name="tool" required>{options}</select></p>'
+        f'<p><label for="fix-repo">{L("專案連結或檔案分享網址（沒有的話，把壓縮檔寄到下方的 email）", "Repo link or file-share URL (or email us a zip)")}</label>'
+        f'<input id="fix-repo" name="repo" type="url" inputmode="url" placeholder="https://" autocomplete="off"></p>'
+        f'<p><label for="fix-problem">{L("卡在哪裡？請寫下錯誤訊息、你已經試過什麼，以及你希望修好什麼。", "What&#39;s stuck? Paste the error, what you already tried, and what you want fixed.")}</label>'
+        f'<textarea id="fix-problem" name="problem" required rows="7"></textarea></p>'
+        f'<p><button type="submit" class="btn">{L("送出免費初看", "Send a free first look")}</button></p>'
+        f'</form>'
+        f'<p class="sub">{L("也可以直接寫信到", "Prefer email? Write to")} <a href="{mailto}">{MAIL}</a>'
+        f'{L("，信件主旨寫「程式代修申請」，並附上專案連結或壓縮檔。", ". Use the subject &quot;Stuck app fix request&quot; and attach a repo link or zip.")}</p>'
+    )
+
+def fix_body(zh, P):
+    L = lambda z, e: z if zh else e
+    return (
+        f'<h1>{L("AI 做出來的程式卡住了？我們幫你修好。", "Stuck AI-built app? We fix it.")}</h1>'
+        f'<p class="sub">{L("你用 Claude Code、Cursor、Lovable、Bolt、Replit、v0 或類似工具做出了東西，現在卡關了？把專案寄給我們。我們先免費看一眼。修得好，再報價；修不好，不收費。", "Built something with Claude Code, Cursor, Lovable, Bolt, Replit, v0, or a similar tool, and now you&#39;re stuck? Send us the project. We&#39;ll take a free first look. If we can fix it, we&#39;ll quote you. If we can&#39;t, you pay nothing.")}</p>'
+        f'<div class="card"><div class="price">US$149</div><p>{L("一般問題一項的價格。先免費看一眼；確定修得好才收費。修不好就不收費。", "Per issue, after a free first look. You pay only if we confirm we can fix it. If we can&#39;t, you pay nothing.")}</p>'
+        f'<a class="btn" href="#request">{L("送出免費初看", "Send a free first look")}</a></div>'
+        f'<div class="card"><h2>{L("怎麼進行", "How it works")}</h2>'
+        f'<ol>'
+        f'<li>{L("送出免費初看：專案連結或壓縮檔，再加上你卡在哪裡的簡短說明。", "Send a free first look: a repo link or zip, plus a short description of what&#39;s stuck.")}</li>'
+        f'<li>{L("我們先看過。修得好，就報價。一般問題一項收 149 美元。", "We look it over. If we can fix it, we send a quote. A standard fix is US$149 per issue.")}</li>'
+        f'<li>{L("確定修得好之後，才請你付款，那時會寄付款連結給你。目標是大約 48 小時內完成（這是目標，不是保證）。", "You pay only after we confirm we can fix it — we send a payment link then. We aim to turn it around in about 48 hours. That&#39;s a target, not a guarantee.")}</li>'
+        f'</ol></div>'
+        f'<div class="card"><h2>{L("我們通常修得好的情況", "What we can usually fix")}</h2>'
+        f'<ul>'
+        f'<li>{L("看不懂、過不去的錯誤訊息", "Error messages you can&#39;t get past")}</li>'
+        f'<li>{L("套件或相依套件裝不起來", "Dependency or package install failures")}</li>'
+        f'<li>{L("網站上不了線", "Sites that won&#39;t deploy")}</li>'
+        f'<li>{L("登入或付款功能壞掉", "Login or payment features that are broken")}</li>'
+        f'<li>{L("資料庫連不上", "Database connections that won&#39;t work")}</li>'
+        f'</ul></div>'
+        f'<div class="card"><h2>{L("我們不接的情況", "What we don&#39;t take on")}</h2>'
+        f'<ul>'
+        f'<li>{L("大型、很亂、需要整份重寫的專案", "Full rewrites of large, messy projects")}</li>'
+        f'<li>{L("需要實體硬體，或必須用到我們接觸不到的機器", "Work that needs physical hardware, or access to a machine we can&#39;t reach")}</li>'
+        f'</ul>'
+        f'<p>{L("如果不在範圍內，我們會在免費初看之後先跟你說，這一看不收費。", "If it&#39;s out of scope, we&#39;ll tell you after the free first look. That look is still free.")}</p></div>'
+        f'<div class="card" id="request"><h2>{L("送出免費初看", "Send a free first look")}</h2>'
+        f'<p>{L("不用先付款。填表或寫信即可，我們會回覆能不能修、以及若能修的報價。", "No payment up front. Send the form or an email, and we will reply with whether we can fix it and, if so, the quote.")}</p>'
+        f'{fix_form(zh, P)}</div>'
+        f'<div class="card"><h2>{L("常見問題", "FAQ")}</h2>'
+        f'<h3>{L("我該寄什麼？", "What should I send?")}</h3>'
+        f'<p>{L("專案連結，或壓縮檔（沒有連結就用電子郵件附上壓縮檔），再加上問題的簡短說明：錯誤訊息、你已經試過什麼，以及用的是哪個工具。", "A link to the repo, or a zip (email the zip if you do not have a link), and a short description of the problem: the error, what you already tried, and which tool you used.")}</p>'
+        f'<h3>{L("我的程式碼安全嗎？", "Is my code safe?")}</h3>'
+        f'<p>{L("我們只會用你的程式碼來查看並修復你提出的問題，不會拿去做別的事。你要求刪除，我們就刪。", "We only use your code to look at and fix the issue you sent. We don&#39;t use it for anything else. If you ask us to delete it, we will.")}</p>'
+        f'<h3>{L("如果修不好呢？", "What if you can&#39;t fix it?")}</h3>'
+        f'<p>{L("不收費。我們會在免費初看之後、請你付款之前就告訴你。", "You pay nothing. We&#39;ll say so after the free first look, before any payment.")}</p>'
+        f'<h3>{L("怎麼付款？", "How do I pay?")}</h3>'
+        f'<p>{L("我們確認修得好之後，會寄付款連結給你。這個頁面不用付款。", "After we confirm we can fix it, we send you a payment link. There&#39;s nothing to pay on this page.")}</p></div>'
+        f'<p class="sub">{L("這是 AI Agents Board（每週 AI Agent 工具排行榜）提供的服務。", "This is a service from AI Agents Board, the weekly ranking of AI agent tools.")}</p>'
+    )
+
+def fix_thanks_body(zh, P):
+    L = lambda z, e: z if zh else e
+    return (
+        f'<h1>{L("已收到你的申請", "Thanks — we got your request")}</h1>'
+        f'<div class="card"><p>{L("我們會先做免費初看，再回信告訴你能不能修。若修得好，信裡會附上報價；修不好，你不必付款。", "We&#39;ll take a free first look and write back to say whether we can fix it. If we can, that email will include the quote. If we can&#39;t, you won&#39;t be asked to pay.")}</p>'
+        f'<p>{L("若你還要補寄壓縮檔或更多說明，請寫信到", "If you still need to send a zip or more detail, email")} <a href="mailto:{MAIL}">{MAIL}</a>{L("。", ".")}</p>'
+        f'<p><a class="btn" href="{P("/")}">{L("回到首頁", "Back to the homepage")}</a> <a href="{P("/fix/")}">{L("回到代修說明", "Back to the fix page")}</a></p></div>'
+    )
