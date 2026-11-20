@@ -30,3 +30,8 @@ form.fix select{appearance:auto}
 form.fix .honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 form.fix button.btn{margin-top:6px}
 .card h3{font-size:17px;margin:16px 0 6px}
+
+form.fix input[type=file]{padding:8px 0;border:0;background:transparent;color:#c8ccd8;max-width:100%}
+form.fix .file-note{font-weight:400;color:#9aa3b5;font-size:14px}
+.services ul{margin:8px 0 0;padding-left:22px}
+.services li{margin:10px 0}

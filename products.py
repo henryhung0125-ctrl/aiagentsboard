@@ -1,4 +1,4 @@
-"""Extra pages: AI Coding Agent Setup Pack (sales + hidden download), Probably Stolen calculator, and the stuck-app fix service."""
+"""Extra pages: AI Coding Agent Setup Pack, Probably Stolen calculator, stuck-app fix service, and pet insurance appeal letters."""
 import os, json, shutil
 from urllib.parse import quote
 DL = "/dl/C0EXYCG89EaeAcvytSaNYKjS/"
@@ -114,6 +114,21 @@ def extra_pages(lang_page, P, ROOT, updated):
                   "已收到你的代修申請｜SI 精選" if zh else "We got your fix request | AI Agents Board",
                   "我們已收到你的申請，會再回信說明免費初看。" if zh else "Thanks. We got your request and will write back about the free first look.",
                   fix_thanks_body(zh, Pl), None, updated, True)
+        pet = {"@context": "https://schema.org", "@type": "Service",
+               "name": "Pet insurance appeal letter" if not zh else "寵物保險申訴代寫",
+               "description": "Free first review of a denied pet insurance claim. US$79 per claim for a ready-to-send appeal letter. If we see no reasonable appeal ground, you pay nothing.",
+               "provider": {"@type": "Organization", "name": "AI Agents Board", "url": "https://aiagentsboard.com/"},
+               "areaServed": "US",
+               "offers": {"@type": "Offer", "price": "79.00", "priceCurrency": "USD",
+                          "description": "Per claim, quoted after a free first review. No charge if we see no reasonable appeal ground."}}
+        urls.append((lang_page(lang, "/pet-appeal/",
+                               "寵物保險被拒賠了？我們幫你寫申訴信｜SI 精選" if zh else "Pet insurance claim denied? We write your appeal letter | AI Agents Board",
+                               "寵物保險被拒賠？先免費初審。一案 79 美元，我們用你的名義寫好可直接寄出的申訴信。若看不到合理依據，就不收費。" if zh else "Pet insurance claim denied? Free first review. US$79 per claim for a ready-to-send appeal letter in your name. If we see no reasonable appeal ground, you pay nothing.",
+                               pet_body(zh, Pl), [pet], "2026-11-20"), "2026-11-20"))
+        lang_page(lang, "/pet-appeal/thanks/",
+                  "已收到你的申訴代寫申請｜SI 精選" if zh else "We got your appeal request | AI Agents Board",
+                  "我們已收到你的申請，會再回信說明免費初審。" if zh else "Thanks. We got your request and will write back about the free first review.",
+                  pet_thanks_body(zh, Pl), None, updated, True)
         lang_page(lang, DL, "下載｜AI Coding Agent Setup Pack" if zh else "Download | AI Coding Agent Setup Pack", "Download", dl_body(zh), None, None, True)
         shutil.copy("/workspace/pack/" + ZIP, os.path.join(ROOT, Pl(DL).lstrip("/"), ZIP))
     return urls
@@ -252,4 +267,105 @@ def fix_thanks_body(zh, P):
         f'<div class="card"><p>{L("我們會先做免費初看，再回信告訴你能不能修。若修得好，信裡會附上報價；修不好，你不必付款。", "We&#39;ll take a free first look and write back to say whether we can fix it. If we can, that email will include the quote. If we can&#39;t, you won&#39;t be asked to pay.")}</p>'
         f'<p>{L("若你還要補寄壓縮檔或更多說明，請寫信到", "If you still need to send a zip or more detail, email")} <a href="mailto:{MAIL}">{MAIL}</a>{L("。", ".")}</p>'
         f'<p><a class="btn" href="{P("/")}">{L("回到首頁", "Back to the homepage")}</a> <a href="{P("/fix/")}">{L("回到代修說明", "Back to the fix page")}</a></p></div>'
+    )
+
+def services_cta(zh, P):
+    L = lambda z, e: z if zh else e
+    return (
+        f'<div class="card services" id="services"><h2>{L("服務", "Services")}</h2>'
+        f'<ul>'
+        f'<li><a href="{P("/fix/")}">{L("AI 做出來的程式卡住了？我們幫你修好。", "Stuck AI-built app? We fix it.")}</a> — {L("一般問題一項 149 美元，先免費看一眼。", "US$149 per issue after a free first look.")}</li>'
+        f'<li><a href="{P("/pet-appeal/")}">{L("寵物保險被拒賠了？我們幫你寫申訴信。", "Pet insurance claim denied? We write your appeal letter.")}</a> — {L("一案 79 美元，先免費初審。", "US$79 per claim after a free first review.")}</li>'
+        f'</ul></div>'
+    )
+
+def pet_form(zh, P):
+    L = lambda z, e: z if zh else e
+    action = P("/pet-appeal/thanks/")
+    lang = "zh" if zh else "en"
+    subj = quote("Pet insurance appeal")
+    body = quote(
+        "姓名：\n電子郵件：\n保險公司：\n寵物名字與種類：\n理賠金額：\n拒賠理由（用自己的話說）：\n事情經過：\n（請附上拒賠信、保單如有、獸醫病歷或發票）\n"
+        if zh else
+        "Name:\nEmail:\nInsurer:\nPet name and species:\nClaim amount:\nDenial reason in your own words:\nWhat happened:\n(Please attach the denial letter, policy if you have it, and vet records or invoices)\n"
+    )
+    mailto = f"mailto:{MAIL}?subject={subj}&body={body}"
+    accept = ".pdf,.png,.jpg,.jpeg,.webp,.heic,.doc,.docx"
+    return (
+        f'<form class="fix" name="pet-appeal" method="POST" action="{action}" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field">'
+        f'<input type="hidden" name="form-name" value="pet-appeal">'
+        f'<input type="hidden" name="language" value="{lang}">'
+        f'<p class="honeypot"><label>Do not fill this in <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>'
+        f'<p><label for="pa-name">{L("姓名", "Name")}</label>'
+        f'<input id="pa-name" name="name" type="text" required autocomplete="name"></p>'
+        f'<p><label for="pa-email">{L("電子郵件", "Email")}</label>'
+        f'<input id="pa-email" name="email" type="email" required autocomplete="email"></p>'
+        f'<p><label for="pa-insurer">{L("保險公司", "Insurer")}</label>'
+        f'<input id="pa-insurer" name="insurer" type="text" required placeholder="Trupanion, Nationwide, Healthy Paws…" autocomplete="organization"></p>'
+        f'<p><label for="pa-pet">{L("寵物名字與種類（例如：Max，狗）", "Pet name and species (for example: Max, dog)")}</label>'
+        f'<input id="pa-pet" name="pet" type="text" required></p>'
+        f'<p><label for="pa-amount">{L("理賠金額", "Claim amount")}</label>'
+        f'<input id="pa-amount" name="claim_amount" type="text" inputmode="decimal" placeholder="US$3,000"></p>'
+        f'<p><label for="pa-reason">{L("拒賠理由（用自己的話說）", "Denial reason, in your own words")}</label>'
+        f'<textarea id="pa-reason" name="denial_reason" required rows="4"></textarea></p>'
+        f'<p><label for="pa-story">{L("事情經過的簡短說明", "A short account of what happened")}</label>'
+        f'<textarea id="pa-story" name="story" required rows="6"></textarea></p>'
+        f'<p><label for="pa-file-denial">{L("拒賠信", "Denial letter")}</label>'
+        f'<input id="pa-file-denial" name="file_denial" type="file" accept="{accept}"></p>'
+        f'<p><label for="pa-file-policy">{L("保單（如果你有）", "Policy (if you have it)")}</label>'
+        f'<input id="pa-file-policy" name="file_policy" type="file" accept="{accept}"></p>'
+        f'<p><label for="pa-file-records">{L("獸醫病歷或發票", "Vet records or invoices")}</label>'
+        f'<input id="pa-file-records" name="file_records" type="file" accept="{accept}"></p>'
+        f'<p class="sub file-note">{L("最多可上傳 3 個檔案。整份表單（含檔案）必須小於 8 MB；超過的話，請改用下方的電子郵件寄來。", "You can attach up to 3 files. The whole form, including files, must stay under 8 MB. For anything larger, email the files instead.")}</p>'
+        f'<p><button type="submit" class="btn">{L("送出免費初審", "Send a free first review")}</button></p>'
+        f'</form>'
+        f'<p class="sub">{L("也可以直接寫信到", "Prefer email? Write to")} <a href="{mailto}">{MAIL}</a>'
+        f'{L("，信件主旨寫「Pet insurance appeal」，並附上文件。", " with the subject &quot;Pet insurance appeal&quot; and attach your files.")}</p>'
+    )
+
+def pet_body(zh, P):
+    L = lambda z, e: z if zh else e
+    return (
+        f'<h1>{L("寵物保險被拒賠了？我們幫你寫申訴信。", "Pet insurance claim denied? We write your appeal letter.")}</h1>'
+        f'<p class="sub">{L("寵物做了治療，帳單很貴，保險公司卻拒賠。把拒賠信、保單（如果你有）和獸醫病歷寄給我們。我們會讀過這些文件，找出拒賠理由站不住腳的地方，再用你的名義寫好一封可直接寄出的申訴信，並附上一份簡短清單，說明該附哪些文件、寄到哪裡、怎麼寄。", "Your dog or cat had treatment, the bill is large, and the insurer said no. Send us the denial letter, the policy if you have it, and the vet records. We&#39;ll read them, look for where the denial is weak, and write a ready-to-send appeal letter in your name, plus a short checklist of what to attach and where to send it.")}</p>'
+        f'<div class="card"><div class="price">US$79</div><p>{L("一案的價格。先免費初審；若我們看不到合理的申訴依據，就不收費。", "Per claim, after a free first review. If we see no reasonable appeal ground, you pay nothing.")}</p>'
+        f'<a class="btn" href="#request">{L("送出免費初審", "Send a free first review")}</a></div>'
+        f'<div class="card"><h2>{L("怎麼進行", "How it works")}</h2>'
+        f'<ol>'
+        f'<li>{L("送出免費初審：拒賠信、保單（如果你有）、獸醫病歷或發票，再加上事情經過的簡短說明。", "Send a free first review: the denial letter, the policy if you have it, vet records or invoices, and a short account of what happened.")}</li>'
+        f'<li>{L("我們會讀保單與拒賠理由，並尋找站不住腳的地方，例如既往症的時間認定、等待期、除外條款的用詞、缺少的病歷，或是理賠編碼。", "We read the policy and the denial reason, and look for weak points — for example pre-existing condition timing, waiting periods, exclusion wording, missing records, or claim coding.")}</li>'
+        f'<li>{L("如果我們認為有合理的申訴依據，就報價。一案 79 美元。如果沒有，我們會告訴你，你不必付款。", "If we see a reasonable ground for an appeal, we quote you. The price is US$79 per claim. If we don&#39;t, we tell you and you pay nothing.")}</li>'
+        f'<li>{L("你付款之後，我們會交出一封以你名義撰寫、可直接寄出的申訴信，以及一份簡短清單。目標是大約 2 個工作天內完成（這是目標，不是保證）。信要由你本人寄出。", "After you pay, we deliver a ready-to-send letter in your name and a short checklist. We aim to do this in about 2 business days. That&#39;s a target, not a guarantee. You send the letter yourself.")}</li>'
+        f'</ol></div>'
+        f'<div class="card"><h2>{L("你會收到什麼", "What you get")}</h2>'
+        f'<ul>'
+        f'<li>{L("一封以你名義撰寫、可直接寄出的申訴信", "A ready-to-send appeal letter in your name")}</li>'
+        f'<li>{L("一份簡短清單，說明該附哪些文件、寄到哪裡、怎麼寄", "A short checklist of what to attach and where and how to send it")}</li>'
+        f'</ul></div>'
+        f'<div class="card"><h2>{L("這不是什麼", "What this is not")}</h2>'
+        f'<p>{L("我們不是律師事務所，也不是獸醫，更與任何保險公司無關。這不是法律意見，也不是獸醫建議。我們無法保證保險公司會改變決定。信要由你本人寄出。", "We are not a law firm, not veterinarians, and not affiliated with any insurer. This is not legal or veterinary advice. We can&#39;t guarantee the insurer will reverse the decision. You send the letter yourself.")}</p></div>'
+        f'<div class="card" id="request"><h2>{L("送出免費初審", "Send a free first review")}</h2>'
+        f'<p>{L("不用先付款。填表或寫信即可。我們會先看過，再告訴你有沒有合理的申訴依據；若有，再報價。", "No payment up front. Send the form or an email. We&#39;ll look first and tell you whether there is a reasonable ground for an appeal; if there is, we&#39;ll quote you.")}</p>'
+        f'{pet_form(zh, P)}</div>'
+        f'<div class="card"><h2>{L("常見問題", "FAQ")}</h2>'
+        f'<h3>{L("哪些保險公司？", "Which insurers?")}</h3>'
+        f'<p>{L("美國任何寵物保險都可以，例如 Trupanion、Nationwide、Healthy Paws、Lemonade、Embrace、Pets Best 或 ASPCA。", "Any US pet insurer, for example Trupanion, Nationwide, Healthy Paws, Lemonade, Embrace, Pets Best, or ASPCA.")}</p>'
+        f'<h3>{L("如果已經申訴過一次呢？", "What if I already appealed once?")}</h3>'
+        f'<p>{L("還是可以把案件寄來。我們會在免費初審時告訴你，再寫一封信是否可能有幫助。如果看不到合理依據，就不收費。", "You can still send us the case. We&#39;ll say in the free review whether another letter is likely to help. If we don&#39;t see a reasonable ground, you pay nothing.")}</p>'
+        f'<h3>{L("我需要準備什麼？", "What do I need?")}</h3>'
+        f'<p>{L("拒賠信、保單（如果你有）、獸醫病歷或發票，再加上事情經過的簡短說明。若有文件缺了，在表單裡說明，先把現有的寄來即可。", "The denial letter, the policy if you have it, vet records or invoices, and a short account of what happened. If a file is missing, say so in the form and send what you have.")}</p>'
+        f'<h3>{L("怎麼付款？", "How do I pay?")}</h3>'
+        f'<p>{L("免費初審之後，若我們可以代寫申訴信，會寄付款連結給你。這個頁面不用付款。", "After the free review, if we can write an appeal, we send a payment link. There&#39;s nothing to pay on this page.")}</p>'
+        f'<h3>{L("我的資料安全嗎？", "Is my information safe?")}</h3>'
+        f'<p>{L("我們只會用你的文件來審視拒賠理由並撰寫申訴信，不會拿去做別的事。你要求刪除，我們就刪。", "We only use your documents to review the denial and write your appeal. We don&#39;t use them for anything else. If you ask us to delete them, we will.")}</p></div>'
+        f'<p class="sub">{L("這是 AI Agents Board 提供的服務。我們不是律師或獸醫，也不能保證保險公司會改變決定。", "This is a service from AI Agents Board. We are not lawyers or veterinarians, and we cannot guarantee the insurer will change its decision.")}</p>'
+    )
+
+def pet_thanks_body(zh, P):
+    L = lambda z, e: z if zh else e
+    return (
+        f'<h1>{L("已收到你的申請", "Thanks — we got your request")}</h1>'
+        f'<div class="card"><p>{L("我們會先做免費初審，再回信告訴你有沒有合理的申訴依據。若有，信裡會附上報價；若沒有，你不必付款。", "We&#39;ll take a free first review and write back to say whether there is a reasonable ground for an appeal. If there is, that email will include the quote. If there isn&#39;t, you won&#39;t be asked to pay.")}</p>'
+        f'<p>{L("若你還要補寄檔案或更多說明，請寫信到", "If you still need to send files or more detail, email")} <a href="mailto:{MAIL}">{MAIL}</a>{L("。", ".")}</p>'
+        f'<p><a class="btn" href="{P("/")}">{L("回到首頁", "Back to the homepage")}</a> <a href="{P("/pet-appeal/")}">{L("回到申訴代寫說明", "Back to the appeal page")}</a></p></div>'
     )
